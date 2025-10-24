@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موقعي الشخصي</title>
+  
+  <!-- خط Cairo -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- أيقونات Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --text: #f1f5f9;
+      --primary: #0ea5e9;
+      --accent: #ffe347;
+      --card: #1e293b;
+    }
+
+    body.light {
+      --bg: #f9fafb;
+      --text: #1e293b;
+      --primary: #2563eb;
+      --accent: #eab308;
+      --card: #ffffff;
+    }
+
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* ===== رأس الصفحة ===== */
+    header {
+      height: 100vh;
+      background: linear-gradient(135deg, var(--primary), #1e3a8a);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* زر الوضع */
+    .mode-toggle {
+      background: var(--accent);
+      color: #1e293b;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .mode-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    /* الصورة الشخصية */
+    .profile {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      margin-bottom: 1.5rem;
+      border-radius: 50%;
+      overflow: hidden;
+      animation: pulse 2.5s infinite ease-in-out;
+      box-shadow: 0 0 0 0 rgba(255, 227, 71, 0.5);
+    }
+
+    .profile img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 227, 71, 0.6); }
+      70% { box-shadow: 0 0 0 20px rgba(255, 227, 71, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 227, 71, 0); }
+    }
+
+    .hero-content {
+      animation: fadeInUp 1.5s ease;
+      margin-top: 7rem;
+    }
+
+    .hero-content h2 {
+      font-size: 2.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content span {
+      color: var(--accent);
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: #1e293b;
+      padding: 0.8rem 1.5rem;
+      margin-top: 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      background-color: #facc15;
+      transform: scale(1.05);
+    }
+
+    /* الأقسام */
+    section {
+      padding: 5rem 2rem;
+      text-align: center;
+      background-color: var(--bg);
+    }
+
+    section h2 {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 3px;
+      background-color: var(--primary);
+    }
+
+    .fade-element {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+    }
+
+    .fade-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about p {
+      max-width: 700px;
+      margin: 1rem auto;
+      line-height: 1.8;
+      color: var(--text);
+      opacity: 0.8;
+    }
+
+    /* المشاريع */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .project-card {
+      background-color: var(--card);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .project-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.6s ease-out;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 30px rgba(14,165,233,0.5);
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .project-card h3 {
+      margin: 1rem 0;
+      color: var(--accent);
+    }
+
+    /* التواصل */
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .social-links a {
+      background-color: var(--card);
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      transition: background 0.3s, transform 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary);
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    /* أيقونات داخل الروابط */
+    .social-links a i {
+      font-size: 1.2rem;
+    }
+
+    /* التذييل */
+    footer {
+      background-color: var(--card);
+      padding: 1rem;
+      text-align: center;
+      color: #94a3b8;
+    }
+
+    footer span {
+      color: var(--accent);
+    }
+
+    /* الحركات */
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .hero-content h2 { font-size: 1.8rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- رأس الصفحة -->
+  <header>
+    <nav>
+      <div class="logo">Abdelrhman</div>
+      <ul class="nav-links">
+        <li><a href="#about">من أنا</a></li>
+        <li><a href="#projects">مشاريعي</a></li>
+        <li><a href="#contact">تواصل معي</a></li>
+      </ul>
+      <button class="mode-toggle" id="modeBtn">☀️ الوضع الفاتح</button>
+    </nav>
+
+    <div class="hero-content fade-element">
+      <div class="profile">
+        <img src="c:\Users\DELL\Downloads\WhatsApp Image 2025-10-17 at 1.31.54 AM.jpeg" alt="صورتي الشخصية">
+      </div>
+      <h2>مرحباً! أنا <span>عبدالرحمن محمد</span></h2>
+      <p>مطور ويب | مصمم واجهات | صانع محتوى رقمي</p>
+      <a href="#contact" class="btn">تواصل معي</a>
+    </div>
+  </header>
+
+  <!-- من أنا -->
+  <section id="about" class="about fade-element">
+    <h2>من أنا</h2>
+    <p>
+      أنا مطور ويب شغوف بإنشاء مواقع احترافية تجمع بين الجمال والسرعة والتفاعل.
+      أستخدم أحدث التقنيات لتقديم تجربة مستخدم مذهلة وسلسة على كل الأجهزة.
+    </p>
+  </section>
+
+  <!-- المشاريع -->
+  <section id="projects" class="projects fade-element">
+    <h2>مشاريعي</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <img src="https://via.placeholder.com/400x250" alt="مشروع 1">
+        <h3>موقع شخصي احترافي</h3>
+        <p>تصميم متجاوب وسريع مع تأثيرات أنيقة.</p>
+        <a href="#" class="btn">عرض المشروع</a>
+      </div>
+      <div class="project-card">
+        <img src="https://via.placeholder.com/400x250" alt="مشروع 2">
+        <h3>لوحة تحكم تفاعلية</h3>
+        <p>واجهة أنيقة وسهلة الاستخدام بتقنيات حديثة.</p>
+        <a href="#" class="btn">عرض المشروع</a>
+      </div>
+      <div class="project-card">
+        <img src="https://via.placeholder.com/400x250" alt="مشروع 3">
+        <h3>مدونة تقنية</h3>
+        <p>منصة أنيقة وسلسة لمشاركة المقالات التقنية.</p>
+        <a href="#" class="btn">عرض المشروع</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- التواصل -->
+  <section id="contact" class="contact fade-element">
+    <h2>تواصل معي</h2>
+    <div class="social-links">
+      <a href="https://wa.me/01281329777" target="_blank"><i class="fab fa-whatsapp"></i> واتساب</a>
+      <a href="https://www.instagram.com/axb_dxo" target="_blank"><i class="fab fa-instagram"></i> إنستغرام</a>
+      <a href="https://www.facebook.com/abdo.mohamed.904049" target="_blank"><i class="fab fa-facebook"></i> فيسبوك</a>
+      <a href="mailto:abdoaboshama8@gmail.com"><i class="fas fa-envelope"></i> البريد الإلكتروني</a>
+    </div>
+  </section>
+
+  <!-- التذييل -->
+  <footer>
+    <p>© 2025 جميع الحقوق محفوظة | تصميم <span>عبدالرحمن</span></p>
+  </footer>
+
+  <script>
+    // إظهار العناصر عند التمرير
+    const fadeEls = document.querySelectorAll('.fade-element, .project-card');
+    function revealOnScroll() {
+      const triggerBottom = window.innerHeight * 0.85;
+      fadeEls.forEach(el => {
+        const elTop = el.getBoundingClientRect().top;
+        if (elTop < triggerBottom) el.classList.add('fade-visible', 'visible');
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+    // تبديل الوضع الليلي والفاتح
+    const modeBtn = document.getElementById('modeBtn');
+    modeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      modeBtn.textContent = document.body.classList.contains('light')
+        ? '🌙 الوضع الليلي'
+        : '☀️ الوضع الفاتح';
+    });
+  </script>
+</body>
+</html>
